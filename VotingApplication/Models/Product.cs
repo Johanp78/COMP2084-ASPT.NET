@@ -2,24 +2,16 @@
 
 namespace VotingApplication.Models
 {
-    public class Product
+
+    public class Vote
     {
-        // Primary Key
-        public int ProductId { get; set; }
+        public int VoteId { get; set; }  // Primary Key
+        public string VoterName { get; set; }
+        public string Candidate { get; set; }
 
-        // Required attribute for Name
-        [Required(ErrorMessage = "Product Name is required")]
-        [StringLength(100, ErrorMessage = "Product Name cannot be longer than 100 characters")]
-        public string Name { get; set; }
-
-        // Optional Description field
-        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters")]
-        public string? Description { get; set; }
-
-        // Foreign Key to Category
-        public int CategoryId { get; set; }
-
-        // Navigation property for Category (Many-to-One relationship)
-        public Category Category { get; set; }
+        // Foreign Key to Election
+        public int ElectionId { get; set; }
+        public Election Election { get; set; }  // Navigation property
     }
+
 }
