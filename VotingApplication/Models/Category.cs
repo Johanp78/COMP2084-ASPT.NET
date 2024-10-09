@@ -14,19 +14,6 @@ namespace VotingApplication.Models
 
     //    public 
 
-    //} 
-
-    public class Election
-    {
-        public int ElectionId { get; set; }  // Primary Key
-        public string ElectionName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
-        // Navigation property
-        public ICollection<Vote> Votes { get; set; }
-    }
-
+    //}
+    ////
 }
-
-
