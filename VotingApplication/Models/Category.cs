@@ -2,17 +2,31 @@
 
 namespace VotingApplication.Models
 {
-    public class Category
+    //public class Category
+    //{
+    //    //Primary key
+
+    //    public int CategoryId {get; set;}
+
+    //    //Category Name
+    //    [Required(ErrorMessage = "Category Name is required")]
+    //    public string Name {get; set;}
+
+    //    public 
+
+    //} 
+
+    public class Election
     {
-        //Primary key
-        
-        public int CategoryId {get; set;}
+        public int ElectionId { get; set; }  // Primary Key
+        public string ElectionName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        //Category Name
-        [Required(ErrorMessage = "Category Name is required")]
-        public string Name {get; set;}
-
-        public 
-    
+        // Navigation property
+        public ICollection<Vote> Votes { get; set; }
     }
+
 }
+
+
