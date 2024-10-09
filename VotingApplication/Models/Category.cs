@@ -2,17 +2,17 @@
 
 namespace VotingApplication.Models
 {
-    public class Category
-    {
-        //Primary key
+    //public class Category
+    //{
+    //    //Primary key
         
-        public int CategoryId {get; set;}
+    //    public int CategoryId {get; set;}
 
-        //Category Name
-        [Required(ErrorMessage = "Category Name is required")]
-        public string Name {get; set;}
+    //    //Category Name
+    //    [Required(ErrorMessage = "Category Name is required")]
+    //    public string Name {get; set;}
 
-        public 
+    //    public 
     
-    }
+    //}
 }
