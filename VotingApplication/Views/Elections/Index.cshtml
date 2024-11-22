@@ -1,0 +1,65 @@
+﻿@model IEnumerable<VotingApplication.Models.Election>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionStartHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectionEndHour)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionStartHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElectionEndHour)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ElectionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ElectionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

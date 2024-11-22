@@ -1,0 +1,58 @@
+﻿@model VotingApplication.Models.Election
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Election</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ElectionTitle" class="control-label"></label>
+                <input asp-for="ElectionTitle" class="form-control" />
+                <span asp-validation-for="ElectionTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectionStatus" class="control-label"></label>
+                <input asp-for="ElectionStatus" class="form-control" />
+                <span asp-validation-for="ElectionStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectionStartDate" class="control-label"></label>
+                <input asp-for="ElectionStartDate" class="form-control" />
+                <span asp-validation-for="ElectionStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectionStartHour" class="control-label"></label>
+                <input asp-for="ElectionStartHour" class="form-control" />
+                <span asp-validation-for="ElectionStartHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectionEndDate" class="control-label"></label>
+                <input asp-for="ElectionEndDate" class="form-control" />
+                <span asp-validation-for="ElectionEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectionEndHour" class="control-label"></label>
+                <input asp-for="ElectionEndHour" class="form-control" />
+                <span asp-validation-for="ElectionEndHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
