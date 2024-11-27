@@ -5,7 +5,7 @@ using VotingApplication.Models;
 
 namespace VotingApplication.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser> // Change here
+    public class ApplicationDbContext : IdentityDbContext<User> // Make sure it's IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -20,44 +20,53 @@ namespace VotingApplication.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Ensure to call the base method
+            base.OnModelCreating(modelBuilder);
 
-            // User -> Role
+
+            // Rename AspNetUsers to Users
+            modelBuilder.Entity<User>()
+                .ToTable("Users");
+
+            // Set default values for UserRol and UserElection
+            modelBuilder.Entity<User>()
+                .Property(u => u.UserRol)
+                .HasDefaultValue(2);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.UserElection)
+                .HasDefaultValue(1);
+
+            // Define relationships
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.UserRol)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // User -> Election
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Election)
                 .WithMany(e => e.Users)
                 .HasForeignKey(u => u.UserElection)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Candidate -> User
             modelBuilder.Entity<Candidate>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Candidates)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Candidate -> Election
             modelBuilder.Entity<Candidate>()
                 .HasOne(c => c.Election)
                 .WithMany(e => e.Candidates)
                 .HasForeignKey(c => c.ElectionElection)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Vote -> Candidate
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.Candidate)
                 .WithMany(c => c.Votes)
                 .HasForeignKey(v => v.VotesCandidate)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Vote -> Election
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.Election)
                 .WithMany(e => e.Votes)

@@ -1,25 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace VotingApplication.Models
 {
-    public class User
+    public class User : IdentityUser // Inheriting from IdentityUser
     {
-        [Key]
-        public int UserId { get; set; }
+ 
+
+        // Custom properties
         [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string UserEmail { get; set; }
-        [Required]
-        public string Password { get; set; }
-        public int UserRol { get; set; }
-        public int UserElection { get; set; }
-        public string UserImage { get; set; }
-        public int UserStatus { get; set; }
+        public int UserRol { get; set; } = 2; // Default value of 2
+        public int UserElection { get; set; } = 1; // Default value of 1
+        public string? UserImage { get; set; }
+        public int UserStatus { get; set; } = 1; // Default value of 1
 
         // Navigation properties
         public Role Role { get; set; }
         public Election Election { get; set; }
-        public ICollection<Candidate> Candidates { get; set; }
+        public ICollection<Candidate> Candidates { get; set; } // Collection of Candidates for this User
     }
 }

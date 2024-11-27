@@ -7,7 +7,7 @@ namespace VotingApplication.Models
     {
         [Key]
         public int CandidateId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int ElectionElection { get; set; }
 
         public User User { get; set; }
