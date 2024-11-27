@@ -1,9 +1,60 @@
-﻿@{
+﻿@model IEnumerable<Election>
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-  <div class="text-center">
-      <h1 class="display-4">Welcome</h1>
-      <p><a href="https://learn.microsoft.com/aspnet/core">Voting web application using ASP.Net MVC model and SQL server</a>.</p>
-  </div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p><a href="https://learn.microsoft.com/aspnet/core">Voting web application using ASP.Net MVC model and SQL Server</a>.</p>
+</div>
+
+<!-- Elections Table -->
+<h2>Active Elections</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Election Name</th>
+            <th>Status</th>
+            <th>Actions</th> <!-- Add Actions Column -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var election in Model)
+        {
+            <tr>
+                <td>@election.ElectionTitle</td>
+                <td>
+                    @if (election.ElectionStatus == 1)
+                    {
+                        <span>Active Election</span>
+                    }
+                    else if (election.ElectionStatus == 2)
+                    {
+                        <span>Closed Election</span>
+                    }
+                    else
+                    {
+                        <span>Unknown Status</span>
+                    }
+                </td>
+
+                <!-- Show action links only if the user has UserRol = 1 (Admin) -->
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var isAdmin = (bool)ViewData["IsAdmin"];
+                        if (isAdmin)  // Check if the user is an Admin (UserRol == 1)
+                        {
+                            <a href="@Url.Action("Edit", "Home", new { id = election.ElectionId })">Edit</a>
+                            <a href = "@Url.Action("Delete", "Home", new { id = election.ElectionId })" > Delete </a> 
+                            <a href = "@Url.Action("Create", "Home")" > Create </a>
+                    }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

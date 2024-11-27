@@ -1,34 +1,50 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using VotingApplication.Models;
+using VotingApplication.Data;
 
 namespace VotingApplication.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, UserManager<User> userManager)
         {
-            _logger = logger;
+            _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        // Fetch only active elections (status 1) and allow anonymous access
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var activeElections = await _context.Elections
+                                                 .Where(e => e.ElectionStatus == 1) // Only active elections
+                                                 .ToListAsync();
+
+            // Get the current user's role (UserRol)
+            var currentUser = await _userManager.GetUserAsync(User);
+            var isAdmin = currentUser != null && currentUser.UserRol == 1; // Check if the user is an admin
+
+            // Pass the data and role status to the view
+            ViewData["IsAdmin"] = isAdmin;
+
+            return View(activeElections);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null && currentUser.UserRol == 1)
+            {
+                return View();
+            }
+            return Unauthorized();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        // Other actions...
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using VotingApplication.Data;
-using VotingApplication.Models; // Make sure to include this for the custom User class
+using VotingApplication.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,14 +16,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Use your custom User class here
-builder.Services.AddDefaultIdentity<User>(options => 
+builder.Services.AddDefaultIdentity<User>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier;
 })
+    .AddRoles<IdentityRole>() // Optional: Add roles if needed
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+// Add Google Authentication without overriding Identity's default schemes
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
+
+// Enable Sessions
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -43,11 +55,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Enable Authentication and Authorization
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Enable Sessions Middleware
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();
