@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:VotingApplicationContextConnection"
+    },
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "mssql3": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/votingappgc/providers/Microsoft.ServiceLinker/linkers/ConnectionStrings_207E735A3D",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/votingappdbserver/databases/VotingAppDB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings"
+    }
+  }
+}

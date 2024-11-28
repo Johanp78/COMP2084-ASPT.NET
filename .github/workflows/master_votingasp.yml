@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - votingapp
+name: Build and deploy ASP.Net Core app to Azure Web App - votingasp
 
 on:
   push:
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_536E5EE194D54DC690594FA9A535F835 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E0FC45C91A914EA49E80979FB998DDC4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B40CB25294C2467C95C66156C61AAC49 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DF8B0538C2814E6BBD0E501E00F78BA7 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6C911A50643741DF9CC0FE6AC0442B48 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_ABF4AFCAC64B404595D8EF4E486866CD }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'votingapp'
+          app-name: 'votingasp'
           slot-name: 'Production'
           package: .
           
