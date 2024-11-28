@@ -27,12 +27,13 @@ namespace VotingApplication.Controllers
 
             // Get the current user's role (UserRol)
             var currentUser = await _userManager.GetUserAsync(User);
-            var isAdmin = currentUser != null && currentUser.UserRol == 1; // Check if the user is an admin
+            var isAdmin = currentUser != null && currentUser.UserRol == 1;
 
             // Pass the data and role status to the view
             ViewData["IsAdmin"] = isAdmin;
+            ViewData["CurrentUser"] = currentUser?.UserName; // Pass the user's name if needed
 
-            return View(activeElections);
+            return View(activeElections); // Return the list of active elections to the view
         }
 
         public async Task<IActionResult> Create()
