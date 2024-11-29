@@ -58,7 +58,7 @@ namespace VotingApplication.Data
             modelBuilder.Entity<Candidate>()
                 .HasOne(c => c.Election)
                 .WithMany(e => e.Candidates)
-                .HasForeignKey(c => c.ElectionElection)
+                .HasForeignKey(c => c.ElectionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Vote>()

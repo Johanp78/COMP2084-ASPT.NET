@@ -12,8 +12,8 @@ using VotingApplication.Data;
 namespace VotingApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241128235314_EliminatingInputs")]
-    partial class EliminatingInputs
+    [Migration("20241129224448_CreatingVotingAppTables")]
+    partial class CreatingVotingAppTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,7 +170,7 @@ namespace VotingApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateId"));
 
-                    b.Property<int>("ElectionElection")
+                    b.Property<int>("ElectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -179,7 +179,7 @@ namespace VotingApplication.Migrations
 
                     b.HasKey("CandidateId");
 
-                    b.HasIndex("ElectionElection");
+                    b.HasIndex("ElectionId");
 
                     b.HasIndex("UserId");
 
@@ -395,7 +395,7 @@ namespace VotingApplication.Migrations
                 {
                     b.HasOne("VotingApplication.Models.Election", "Election")
                         .WithMany("Candidates")
-                        .HasForeignKey("ElectionElection")
+                        .HasForeignKey("ElectionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

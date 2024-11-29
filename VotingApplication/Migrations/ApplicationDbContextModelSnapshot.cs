@@ -167,7 +167,7 @@ namespace VotingApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateId"));
 
-                    b.Property<int>("ElectionElection")
+                    b.Property<int>("ElectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -176,7 +176,7 @@ namespace VotingApplication.Migrations
 
                     b.HasKey("CandidateId");
 
-                    b.HasIndex("ElectionElection");
+                    b.HasIndex("ElectionId");
 
                     b.HasIndex("UserId");
 
@@ -392,7 +392,7 @@ namespace VotingApplication.Migrations
                 {
                     b.HasOne("VotingApplication.Models.Election", "Election")
                         .WithMany("Candidates")
-                        .HasForeignKey("ElectionElection")
+                        .HasForeignKey("ElectionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

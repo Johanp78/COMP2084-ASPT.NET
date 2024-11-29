@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VotingApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateVotingAppTables : Migration
+    public partial class CreatingVotingAppTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,9 +34,7 @@ namespace VotingApplication.Migrations
                     ElectionTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ElectionStatus = table.Column<int>(type: "int", nullable: false),
                     ElectionStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ElectionStartHour = table.Column<TimeSpan>(type: "time", nullable: false),
-                    ElectionEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ElectionEndHour = table.Column<TimeSpan>(type: "time", nullable: false)
+                    ElectionEndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,14 +208,14 @@ namespace VotingApplication.Migrations
                     CandidateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ElectionElection = table.Column<int>(type: "int", nullable: false)
+                    ElectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Candidates", x => x.CandidateId);
                     table.ForeignKey(
-                        name: "FK_Candidates_Elections_ElectionElection",
-                        column: x => x.ElectionElection,
+                        name: "FK_Candidates_Elections_ElectionId",
+                        column: x => x.ElectionId,
                         principalTable: "Elections",
                         principalColumn: "ElectionId",
                         onDelete: ReferentialAction.Restrict);
@@ -284,9 +282,9 @@ namespace VotingApplication.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Candidates_ElectionElection",
+                name: "IX_Candidates_ElectionId",
                 table: "Candidates",
-                column: "ElectionElection");
+                column: "ElectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Candidates_UserId",

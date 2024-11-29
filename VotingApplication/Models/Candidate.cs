@@ -8,10 +8,10 @@ namespace VotingApplication.Models
         [Key]
         public int CandidateId { get; set; }
         public string UserId { get; set; }
-        public int ElectionElection { get; set; }
+        public int ElectionId { get; set; }
 
-        public User User { get; set; }
-        public Election Election { get; set; }
-        public ICollection<Vote> Votes { get; set; }
+        public User? User { get; set; }
+        public Election? Election { get; set; }
+        public ICollection<Vote>? Votes { get; set; }
     }
 }
