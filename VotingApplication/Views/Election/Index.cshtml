@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -22,13 +23,7 @@
                 @Html.DisplayNameFor(model => model.ElectionStartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ElectionStartHour)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ElectionEndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ElectionEndHour)
             </th>
             <th></th>
         </tr>
@@ -46,13 +41,7 @@
                 @Html.DisplayFor(modelItem => item.ElectionStartDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ElectionStartHour)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ElectionEndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionEndHour)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |

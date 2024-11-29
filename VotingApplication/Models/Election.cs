@@ -8,15 +8,16 @@ namespace VotingApplication.Models
         public int ElectionId { get; set; }
         [Required]
         public string ElectionTitle { get; set; }
+        [Required]
         public int ElectionStatus { get; set; }
+        [Required]
         public DateTime ElectionStartDate { get; set; }
-        public TimeSpan ElectionStartHour { get; set; }
+        [Required]
         public DateTime ElectionEndDate { get; set; }
-        public TimeSpan ElectionEndHour { get; set; }
 
         // Navigation properties
-        public ICollection<User> Users { get; set; }
-        public ICollection<Candidate> Candidates { get; set; }
-        public ICollection<Vote> Votes { get; set; }
+        public ICollection<User>? Users { get; set; }
+        public ICollection<Candidate>? Candidates { get; set; }
+        public ICollection<Vote>? Votes { get; set; }
     }
 }

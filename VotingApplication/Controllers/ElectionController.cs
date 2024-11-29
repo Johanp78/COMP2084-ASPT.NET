@@ -1,26 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VotingApplication.Data;
 using VotingApplication.Models;
+using Microsoft.Extensions.Logging; // Ensure this namespace is included for logging
 
 namespace VotingApplication.Controllers
 {
-    public class ElectionsController : Controller
+    public class ElectionController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ElectionController> _logger;
 
-        public ElectionsController(ApplicationDbContext context)
+        // Constructor with logger injection
+        public ElectionController(ApplicationDbContext context, ILogger<ElectionController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        // GET: Elections
+        // GET: Election
         public async Task<IActionResult> Index()
         {
             return View(await _context.Elections.ToListAsync());
         }
 
-        // GET: Elections/Details/5
+        // GET: Election/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,29 +47,35 @@ namespace VotingApplication.Controllers
             return View(election);
         }
 
-        // GET: Elections/Create
+        // GET: Election/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Elections/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Election/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ElectionId,ElectionTitle,ElectionStatus,ElectionStartDate,ElectionStartHour,ElectionEndDate,ElectionEndHour")] Election election)
+        public async Task<IActionResult> Create([Bind("ElectionTitle,ElectionStatus,ElectionStartDate,ElectionEndDate")] Election election)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("POST WAS TRIGGERED");
+
+            if (!ModelState.IsValid)
             {
-                _context.Add(election);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Console.WriteLine("ModelState is invalid.");
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine($"Error: {error.ErrorMessage}");
+                }
+                return View(election);
             }
-            return View(election);
+
+            _context.Add(election);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Elections/Edit/5
+        // GET: Election/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,12 +91,10 @@ namespace VotingApplication.Controllers
             return View(election);
         }
 
-        // POST: Elections/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Election/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ElectionId,ElectionTitle,ElectionStatus,ElectionStartDate,ElectionStartHour,ElectionEndDate,ElectionEndHour")] Election election)
+        public async Task<IActionResult> Edit(int id, [Bind("ElectionId,ElectionTitle,ElectionStatus,ElectionStartDate,ElectionEndDate")] Election election)
         {
             if (id != election.ElectionId)
             {
@@ -111,7 +124,7 @@ namespace VotingApplication.Controllers
             return View(election);
         }
 
-        // GET: Elections/Delete/5
+        // GET: Election/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,7 +142,7 @@ namespace VotingApplication.Controllers
             return View(election);
         }
 
-        // POST: Elections/Delete/5
+        // POST: Election/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
