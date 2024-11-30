@@ -14,41 +14,42 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ElectionTitle)
+                @Html.DisplayNameFor(model => model.First().ElectionTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ElectionStatus)
+                @Html.DisplayNameFor(model => model.First().ElectionStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ElectionStartDate)
+                @Html.DisplayNameFor(model => model.First().ElectionStartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ElectionEndDate)
+                @Html.DisplayNameFor(model => model.First().ElectionEndDate)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionEndDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ElectionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ElectionId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElectionTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElectionStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElectionStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElectionEndDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ElectionId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ElectionId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

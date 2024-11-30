@@ -26,8 +26,10 @@ namespace VotingApplication.Controllers
         // GET: Election
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Elections.ToListAsync());
+            var elections = await _context.Elections.ToListAsync();
+            return View(elections); // Passes the list of elections to the view
         }
+
 
         // GET: Election/Details/5
         public async Task<IActionResult> Details(int? id)

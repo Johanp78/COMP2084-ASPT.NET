@@ -1,0 +1,21 @@
+﻿@model VotingApplication.Models.Election
+
+<h1>Vote in @Model.ElectionTitle</h1>
+
+<form asp-action="SubmitVote" method="post">
+    <input type="hidden" name="electionId" value="@Model.ElectionId" />
+
+    <ul>
+        @foreach (var candidate in Model.Candidates)
+        {
+            <li>
+                <label>
+                    <input type="radio" name="candidateId" value="@candidate.CandidateId" required />
+                    @candidate.CandidateName
+                </label>
+            </li>
+        }
+    </ul>
+
+    <button type="submit">Submit Vote</button>
+</form>
