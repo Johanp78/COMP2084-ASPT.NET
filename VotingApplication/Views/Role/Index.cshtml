@@ -1,36 +1,40 @@
-﻿@model IEnumerable<VotingApplication.Models.Role>
+﻿@model IEnumerable<VotingApplication.Models.User>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>User List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New User</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RolesName)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.UserRol)</th>
+            <th>@Html.DisplayNameFor(model => model.UserStatus)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RolesName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RolesId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RolesId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RolesId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserRol)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserStatus)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

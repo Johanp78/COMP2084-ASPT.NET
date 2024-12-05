@@ -15,8 +15,8 @@ namespace VotingApplication.Models
         public int UserStatus { get; set; } = 1; // Default value of 1
 
         // Navigation properties
-        public Role Role { get; set; }
-        public Election Election { get; set; }
-        public ICollection<Candidate> Candidates { get; set; } // Collection of Candidates for this User
+        public Role? Role { get; set; }
+        public Election? Election { get; set; }
+        public ICollection<Candidate>? Candidates { get; set; } // Collection of Candidates for this User
     }
 }

@@ -1,0 +1,58 @@
+﻿@model VotingApplication.Models.User
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h2>User Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt class="col-sm-2">
+            Username
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            Role
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role.RolesName) <!-- Assuming RolesName is the display name of the Role -->
+        </dd>
+        <dt class="col-sm-2">
+            User Status
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserStatus)
+        </dd>
+
+        <dt class="col-sm-2">
+            User Image
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.UserImage))
+            {
+                <img src="@Model.UserImage" alt="User Image" class="img-thumbnail" width="150" height="150" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
