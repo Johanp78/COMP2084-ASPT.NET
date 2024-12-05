@@ -22,7 +22,7 @@
             <label for="check" class="nav__bottom"> <i class="fa-solid fa-bars"></i> </label>
             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav__logo-link"><p class="nav__logo-text">VotingApp</p></a>
             <ul class="nav__options-container">
-                <li class="nav__page-option nav__page-option--active"><a class="nav__page-link nav__page-link--active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="nav__page-option"><a class="nav__page-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     var currentUser = UserManager.GetUserAsync(User).Result; // Sync wait, may cause UI thread blocking issues, but works for simple cases
@@ -31,7 +31,7 @@
                         <li class="nav__page-option"><a class="nav__page-link" asp-controller="User" asp-action="Index">Users</a></li>
                         <li class="nav__page-option"><a class="nav__page-link" asp-controller="Candidate" asp-action="Index">Candidates</a></li>
                         <li class="nav__page-option"><a class="nav__page-link" asp-controller="Role" asp-action="Index">Roles</a></li>
-                        <li class="nav__page-option"><a class="nav__page-link" asp-controller="Election" asp-action="Index">Elections</a></li>
+                        <li class="nav__page-option nav__page-option--active"><a class="nav__page-link nav__page-link--active" asp-controller="Election" asp-action="Index">Elections</a></li>
 
                     }
                     <li class="nav__page-option"><a class="nav__page-link" asp-controller="Vote" asp-action="Index">Votes</a></li>

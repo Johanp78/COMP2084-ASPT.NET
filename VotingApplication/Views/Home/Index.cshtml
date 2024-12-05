@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<Election>
+@using Microsoft.AspNetCore.Identity
+@using VotingApplication.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_IndexPotential.cshtml";
 }
 
+@if (SignInManager.IsSignedIn(User))
+{
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p><a href="https://learn.microsoft.com/aspnet/core">Voting web application using ASP.Net MVC model and SQL Server</a>.</p>
+    <h1 class="display-4">Welcome, @User.Identity?.Name!</h1>
 </div>
+}
 
 <!-- Elections Table -->
 <h2>Active Elections</h2>
