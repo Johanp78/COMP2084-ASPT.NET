@@ -1,2 +1,2 @@
-[[# VotingApplication](https://votingappgc.azurewebsites.net/)
+[#VotingApplication](https://votingapplication.azurewebsites.net/)
 
