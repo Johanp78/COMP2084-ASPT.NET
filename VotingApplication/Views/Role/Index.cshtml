@@ -1,23 +1,21 @@
-﻿@model IEnumerable<VotingApplication.Models.User>
+﻿@model IEnumerable<VotingApplication.Models.Role>
 
 @{
-    ViewData["Title"] = "User List";
+    ViewData["Title"] = "Roles List";
     Layout = "~/Views/Shared/_LayoutRole.cshtml";
 }
 
-<h1>User List</h1>
+<h1>Roles List</h1>
 
 <p>
-    <a asp-action="Create">Create New User</a>
+    <a asp-action="Create" class="btn btn-primary">Create New Role</a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.UserName)</th>
-            <th>@Html.DisplayNameFor(model => model.Email)</th>
-            <th>@Html.DisplayNameFor(model => model.UserRol)</th>
-            <th>@Html.DisplayNameFor(model => model.UserStatus)</th>
+            <th>@Html.DisplayNameFor(model => model.RolesId)</th>
+            <th>@Html.DisplayNameFor(model => model.RolesName)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,14 +23,12 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserRol)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserStatus)</td>
+                <td>@Html.DisplayFor(modelItem => item.RolesId)</td>
+                <td>@Html.DisplayFor(modelItem => item.RolesName)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.RolesId" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.RolesId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.RolesId" class="btn btn-danger btn-sm">Delete</a>
                 </td>
             </tr>
         }
