@@ -38,29 +38,25 @@ namespace VotingApplication.Controllers
         // GET: Election
         public async Task<IActionResult> Index()
         {
-            if (!IsUserAdmin())
-            {
-                return Forbid(); // Return 401 if user is not an Admin
-            }
-
-            return View(await _context.Elections.ToListAsync());
+            // Allow all users to view the list of elections
+            var elections = await _context.Elections.ToListAsync();
+            return View(elections);
         }
+
 
         // GET: Election/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (!IsUserAdmin())
-            {
-                return Forbid(); // Return 401 if user is not an Admin
-            }
-
             if (id == null)
             {
                 return NotFound();
             }
 
             var election = await _context.Elections
+                .Include(e => e.Candidates) // Load candidates
+                .Include(e => e.Votes)      // Load votes
                 .FirstOrDefaultAsync(m => m.ElectionId == id);
+
             if (election == null)
             {
                 return NotFound();
@@ -68,6 +64,31 @@ namespace VotingApplication.Controllers
 
             return View(election);
         }
+
+
+        // POST: Election/CastVote
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CastVote(int electionId, int candidateId)
+        {
+            if (electionId <= 0 || candidateId <= 0)
+            {
+                return BadRequest("Invalid election or candidate.");
+            }
+
+            var vote = new Vote
+            {
+                VotesElection = electionId,
+                VotesCandidate = candidateId,
+                VotesDatetime = DateTime.Now
+            };
+
+            _context.Votes.Add(vote);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = electionId });
+        }
+
 
         // GET: Election/Create
         public IActionResult Create()

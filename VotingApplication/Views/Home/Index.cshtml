@@ -11,9 +11,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<div class="text-center">
-    <h1 class="display-4">Welcome, @User.Identity?.Name!</h1>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Welcome, @User.Identity?.Name!</h1>
+    </div>
 }
 
 <!-- Elections Table -->
@@ -24,7 +24,7 @@
         <tr>
             <th>Election Name</th>
             <th>Status</th>
-            <th>Actions</th> <!-- Add Actions Column -->
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -47,17 +47,19 @@
                     }
                 </td>
 
-                <!-- Show action links only if the user has UserRol = 1 (Admin) -->
                 <td>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        var isAdmin = (bool)ViewData["IsAdmin"];
-                        if (isAdmin)  // Check if the user is an Admin (UserRol == 1)
+                        var isAdmin = User.IsInRole("Admin");
+                        if (isAdmin)
                         {
                             <a href="@Url.Action("Edit", "Home", new { id = election.ElectionId })">Edit</a>
-                            <a href = "@Url.Action("Delete", "Home", new { id = election.ElectionId })" > Delete </a> 
-                            <a href = "@Url.Action("Create", "Home")" > Create </a>
-                    }
+                            <a href="@Url.Action("Delete", "Home", new { id = election.ElectionId })">Delete</a>
+                            <a href="@Url.Action("Create", "Home")">Create</a>
+                        }
+
+                        <!-- Redirect to the vote page -->
+                        <a href="@Url.Action("Details", "Election", new { id = election.ElectionId })" class="btn btn-primary">Vote</a>
                     }
                 </td>
             </tr>

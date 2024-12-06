@@ -69,3 +69,10 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+app.MapControllerRoute(
+    name: "vote",
+    pattern: "Vote/{id?}",
+    defaults: new { controller = "Election", action = "Details" });
+
+

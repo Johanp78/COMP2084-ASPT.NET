@@ -1,54 +1,30 @@
 ﻿@model IEnumerable<VotingApplication.Models.Election>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Active Elections";
     Layout = "~/Views/Shared/_LayoutElection.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Active Elections</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ElectionTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ElectionStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ElectionStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ElectionEndDate)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.ElectionTitle)</th>
+            <th>@Html.DisplayNameFor(model => model.ElectionStatus)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ElectionEndDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ElectionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ElectionId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var election in Model)
+        {
+            <tr>
+                <td>@election.ElectionTitle</td>
+                <td>@election.ElectionStatus</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@election.ElectionId" class="btn btn-primary">Vote</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
