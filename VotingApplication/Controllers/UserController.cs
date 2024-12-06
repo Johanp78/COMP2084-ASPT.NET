@@ -67,6 +67,7 @@ namespace VotingApplication.Controllers
         }
 
         // GET: User/Edit/5
+        // GET: User/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (!IsUserAdmin())
@@ -88,6 +89,13 @@ namespace VotingApplication.Controllers
             // Fetch roles and populate ViewBag
             var roles = await _context.Roles.ToListAsync(); // Fetch roles from the Roles DbSet
             ViewBag.Roles = new SelectList(roles, "RolesId", "RolesName"); // Use RolesId and RolesName
+
+            // Fetch elections and populate ViewBag
+            var elections = await _context.Elections
+                .Where(e => e.ElectionStatus == 1) // Assuming you want only active elections
+                .ToListAsync();
+
+            ViewBag.Elections = new SelectList(elections, "ElectionId", "ElectionTitle"); // Use ElectionId and ElectionTitle
 
             return View(user);
         }
@@ -124,10 +132,6 @@ namespace VotingApplication.Controllers
                     existingUser.UserImage = user.UserImage;
                     existingUser.UserStatus = user.UserStatus;
 
-                    // If updating navigation properties, make sure to update related FK too
-                    existingUser.Role = user.Role;
-                    existingUser.Election = user.Election;
-
                     // Update the entity state
                     _context.Update(existingUser);
                     await _context.SaveChangesAsync();
@@ -146,9 +150,13 @@ namespace VotingApplication.Controllers
                 return RedirectToAction(nameof(Index)); // Redirect after editing
             }
 
-            // If model state is invalid, return the same view with the user object
+            // Fetch roles and elections again if ModelState is invalid
+            ViewBag.Roles = new SelectList(await _context.Roles.ToListAsync(), "RolesId", "RolesName");
+            ViewBag.Elections = new SelectList(await _context.Elections.Where(e => e.ElectionStatus == 1).ToListAsync(), "ElectionId", "ElectionTitle");
+
             return View(user);
         }
+
 
         // GET: User/Delete/5
         public async Task<IActionResult> Delete(string id)

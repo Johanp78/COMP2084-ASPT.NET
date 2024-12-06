@@ -2,6 +2,10 @@
 @using VotingApplication.Models
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@{
+    var currentUser = UserManager.GetUserAsync(User).Result; // Obtener el usuario actual
+    var userElectionId = currentUser?.UserElection; // Obtener el ElectionId del usuario
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +29,7 @@
                 <li class="nav__page-option nav__page-option--active"><a class="nav__page-link nav__page-link--active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    var currentUser = UserManager.GetUserAsync(User).Result; // Sync wait, may cause UI thread blocking issues, but works for simple cases
+                    
                     if (currentUser != null && currentUser.UserRol == 1)
                     {
                         <li class="nav__page-option"><a class="nav__page-link" asp-controller="User" asp-action="Index">Users</a></li>
@@ -34,7 +38,16 @@
                         <li class="nav__page-option"><a class="nav__page-link" asp-controller="Election" asp-action="Index">Elections</a></li>
                        
                     }
-                    <li class="nav__page-option"><a class="nav__page-link" asp-controller="Election" asp-action="Details" asp-route-id="1">Votes</a></li>
+                    <li class="nav__page-option">
+                        @if (userElectionId != null)
+                        {
+                            <a class="nav__page-link" asp-controller="Election" asp-action="Details" asp-route-id="@userElectionId">Votes</a>
+                        }
+                        else
+                        {
+                            <a class="nav__page-link" href="#" onclick="alert('No tienes una elección asignada.'); return false;">Votes</a>
+                        }
+                    </li>
                     <li class="nav__page-option nav__page-option--contact">
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                             <button type="submit" class="nav__page-link nav__page-link--contact">Logout</button>

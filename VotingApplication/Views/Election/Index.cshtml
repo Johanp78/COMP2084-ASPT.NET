@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<VotingApplication.Models.Election>
+@using Microsoft.AspNetCore.Identity
+@using VotingApplication.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Active Elections";
@@ -6,6 +10,19 @@
 }
 
 <h1>Active Elections</h1>
+
+@{
+    var currentUser = UserManager.GetUserAsync(User).Result; // Get the current user
+    bool isAdmin = currentUser != null && currentUser.UserRol == 1; // Check if the user is an admin
+    var userElectionId = currentUser?.UserElection; // Get the user's assigned ElectionId
+}
+
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Election</a>
+    </p>
+}
 
 <table class="table">
     <thead>
@@ -20,9 +37,31 @@
         {
             <tr>
                 <td>@election.ElectionTitle</td>
-                <td>@election.ElectionStatus</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@election.ElectionId" class="btn btn-primary">Vote</a>
+                    @if (election.ElectionStatus == 1)
+                    {
+                        <span>Active Election</span>
+                    }
+                    else if (election.ElectionStatus == 2)
+                    {
+                        <span>Closed Election</span>
+                    }
+                    else
+                    {
+                        <span>Unknown Status</span>
+                    }
+                </td>
+                <td>
+                    @if (userElectionId == election.ElectionId) // Show "Vote" only if it's the assigned election
+                    {
+                        <a asp-action="Details" asp-route-id="@election.ElectionId" class="btn btn-primary">Vote</a>
+                    }
+
+                    @if (isAdmin) // Show only if the user is an admin
+                    {
+                        <a asp-action="Edit" asp-route-id="@election.ElectionId" class="btn btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@election.ElectionId" class="btn btn-danger">Delete</a>
+                    }
                 </td>
             </tr>
         }

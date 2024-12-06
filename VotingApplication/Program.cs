@@ -75,4 +75,3 @@ app.MapControllerRoute(
     pattern: "Vote/{id?}",
     defaults: new { controller = "Election", action = "Details" });
 
-

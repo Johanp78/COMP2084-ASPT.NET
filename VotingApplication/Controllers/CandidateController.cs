@@ -85,16 +85,27 @@ namespace VotingApplication.Controllers
         // POST: Candidate/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CandidateId,UserId,ElectionId")] Candidate candidate)
+        public async Task<IActionResult> Create([Bind("CandidateId, UserId, ElectionId, CandidateName")] Candidate candidate)
         {
             if (!IsUserAdmin())
             {
                 return Forbid(); // Return 401 if user is not an Admin
             }
 
+            // Debugging logs
+            Console.WriteLine("Create action triggered");
             if (candidate.ElectionId == 0)
             {
                 ModelState.AddModelError("ElectionId", "Election ID is required.");
+            }
+
+            // Log model state errors
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine("Model State Error: " + error.ErrorMessage);
+                }
             }
 
             if (ModelState.IsValid)
@@ -136,7 +147,7 @@ namespace VotingApplication.Controllers
         // POST: Candidate/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CandidateId,UserId,ElectionId")] Candidate candidate)
+        public async Task<IActionResult> Edit(int id, [Bind("CandidateId, UserId, ElectionId, CandidateName")] Candidate candidate)
         {
             if (!IsUserAdmin())
             {

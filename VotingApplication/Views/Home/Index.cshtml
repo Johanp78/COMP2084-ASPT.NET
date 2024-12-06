@@ -50,7 +50,11 @@
                 <td>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        var currentUser = UserManager.GetUserAsync(User).Result; // Get the current user
+                        var userElectionId = currentUser?.UserElection; // Get the ElectionId from the user
+
                         var isAdmin = User.IsInRole("Admin");
+
                         if (isAdmin)
                         {
                             <a href="@Url.Action("Edit", "Home", new { id = election.ElectionId })">Edit</a>
@@ -58,8 +62,11 @@
                             <a href="@Url.Action("Create", "Home")">Create</a>
                         }
 
-                        <!-- Redirect to the vote page -->
-                        <a href="@Url.Action("Details", "Election", new { id = election.ElectionId })" class="btn btn-primary">Vote</a>
+                        // Show "Vote" button only if the user's ElectionId matches the current election
+                        if (userElectionId == election.ElectionId)
+                        {
+                            <a href="@Url.Action("Details", "Election", new { id = election.ElectionId })" class="btn btn-primary">Vote</a>
+                        }
                     }
                 </td>
             </tr>
