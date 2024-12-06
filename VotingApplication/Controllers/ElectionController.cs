@@ -86,7 +86,18 @@ namespace VotingApplication.Controllers
             _context.Votes.Add(vote);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", new { id = electionId });
+            // Get the current user
+            var userId = User.Identity.Name; // This gets the username or you can use User.FindFirstValue(ClaimTypes.NameIdentifier)
+            var user = await _userManager.FindByNameAsync(userId); // Use _userManager to find the user by username
+
+            if (user != null)
+            {
+                // Reset the UserElection to 1 after casting the vote
+                user.UserElection = 1;
+                await _userManager.UpdateAsync(user); // Use _userManager to update the user
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
 
